@@ -71,7 +71,7 @@
 <!-- Descrição -->
 ## Descrição
 
-[![Capa][product-screenshot]](https://example.com)
+[![Capa][product-screenshot]](https://github.com/chagretes/mrv-dio-devops/blob/main/doc/%5BMRV%5D%20CI-CD%20na%20Pr%C3%A1tica.pdf)
 
 Este repositório serve de exemplo para o projeto de CI/CD utilizado durante a live .net Experts CI/CD na prática.
 
