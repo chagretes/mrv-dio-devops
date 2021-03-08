@@ -102,6 +102,7 @@ Abaixo segue os requisitos para acompanhar a live assim como instruções de com
    ```
 2. Copilar e executar a aplicação
    ```sh
+   cd src
    dotnet run
    ```
 
