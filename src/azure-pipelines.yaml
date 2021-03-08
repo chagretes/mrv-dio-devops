@@ -1,0 +1,95 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  buildConfiguration: 'Release'
+
+stages:
+- stage: BuildAndPackage
+  displayName: 'Build and package'
+  jobs:
+  - job: Build
+    steps:
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: 'dotnet build $(buildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: publish
+        publishWebProjects: True
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        zipAfterPublish: True
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+        artifactName: 'minhaApi'
+
+- stage: DeployQA
+  displayName: 'Deploy QAS'
+  dependsOn: BuildAndPackage
+  condition: succeeded()
+  jobs:
+  - deployment: DeployWeb
+    displayName: deploy Web App
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    environment: 'prep-qa'
+    strategy: 
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Assinatura do Visual Studio Enterprise – MPN(b9a4b45f-0073-4a87-9100-185c0bf7f9b8)'
+              appType: 'webAppLinux'
+              WebAppName: 'webapppreparacaolive'
+              deployToSlotOrASE: true
+              ResourceGroupName: 'preparacao-live'
+              SlotName: 'quality'
+              packageForLinux: '$(Pipeline.Workspace)/minhaApi/**/*.zip'
+              AppSettings: '-UrlBase $(URLBaseQA)'
+
+- stage: DeployPRD
+  displayName: 'Deploy PRD'
+  dependsOn: DeployQA
+  condition: succeeded()
+  jobs:
+  - deployment: DeployWeb
+    displayName: deploy Web App
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    environment: 'prep-prd'
+    strategy: 
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureAppServiceManage@0
+            inputs:
+              azureSubscription: 'Assinatura do Visual Studio Enterprise – MPN(b9a4b45f-0073-4a87-9100-185c0bf7f9b8)'
+              Action: 'Swap Slots'
+              WebAppName: 'webapppreparacaolive'
+              ResourceGroupName: 'preparacao-live'
+              SourceSlot: 'quality'
+          - task: AzureAppServiceSettings@1
+            inputs:
+              azureSubscription: 'Assinatura do Visual Studio Enterprise – MPN(b9a4b45f-0073-4a87-9100-185c0bf7f9b8)'
+              appName: 'webapppreparacaolive'
+              resourceGroupName: 'preparacao-live'
+              appSettings: |
+                [
+                    {
+                    "name": "UrlBase",
+                    "value": "$(URLBase)",
+                    "slotSetting": true
+                    }
+                ]

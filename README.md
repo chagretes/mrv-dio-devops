@@ -33,6 +33,8 @@
   <p align="center">
     Repositório de exemplo para live MRV + dio
     <br />
+    <a href="https://webapppreparacaolive.azurewebsites.net/Cat?image=true">Live Demo</a>
+    ·
     <a href="https://github.com/chagretes/mrv-dio-devops/issues">Report Bug</a>
     ·
     <a href="https://github.com/chagretes/mrv-dio-devops/issues">Request Feature</a>
@@ -113,12 +115,13 @@ Distribuido sob a licença MIT License. Veja `LICENSE` para mais informações.
 <!-- CONTACT -->
 ## Contato
 
-Felipe Chagas - [@chagretes](https://www.linkedin.com/in/chagretes/) - felipe@chagas.top
-
+* Felipe Chagas - [@chagretes](https://www.linkedin.com/in/chagretes/) - felipe@chagas.top
+* ['{entre chaves}'](https://open.spotify.com/show/1ub9YZKamdMKdKbLia4YrX)
 <!-- ACKNOWLEDGEMENTS -->
 ## Bibliografia
 * [Accelerate: The Science of Lean Software and DevOps: Building and Scaling High Performin](https://www.amazon.com.br/Accelerate-Software-Performing-Technology-Organizations/dp/1942788339)
 * [YAML schema reference](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema)
+* [Build, test, and deploy .NET Core apps](https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/dotnet-core?view=azure-devops&tabs=dotnetfive)
 
 
 
