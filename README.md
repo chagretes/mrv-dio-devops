@@ -37,7 +37,7 @@
     ·
     <a href="https://github.com/chagretes/mrv-dio-devops/issues">Report Bug</a>
     ·
-    <a href="https://github.com/chagretes/mrv-dio-devops/issues">Request Feature</a>
+    <a href="https://www.youtube.com/watch?v=dNxjXewXJLA">Gravação da Live</a>
   </p>
 </p>
 
